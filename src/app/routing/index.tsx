@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { HomePage } from "@pages/home";
-import { NotFoundPage } from "@pages/not-found";
+import { NotFoundPage } from "@pages/notFound";
 import { Layout } from "./Layout";
 import { Routes } from "@shared/constants";
 

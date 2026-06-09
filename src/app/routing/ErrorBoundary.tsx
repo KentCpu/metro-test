@@ -1,4 +1,4 @@
-import { Button, Center, Stack, Text, Title } from "@mantine/core";
+import { Button, Center, Stack, Text, Title } from "@shared/ui";
 import type { ReactNode } from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
 

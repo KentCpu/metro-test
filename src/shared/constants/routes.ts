@@ -1,4 +1,4 @@
-export enum Routes {
-  Home = "/home",
-  NotFound = "*",
-}
+export const Routes = {
+  Home: "/",
+  NotFound: "*",
+} as const;
