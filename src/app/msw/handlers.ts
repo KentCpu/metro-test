@@ -1,6 +1,5 @@
-import { http, HttpResponse } from 'msw'
-
+import { http, HttpResponse } from "msw";
 
 export const handlers = [
-    http.get('/api/getBusStop', () => HttpResponse.json({ id: 'abc-123' })),
+  http.get("/api/getBusStop", () => HttpResponse.json({ id: "abc-123" })),
 ];
