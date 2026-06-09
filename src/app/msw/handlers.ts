@@ -1,5 +1,3 @@
-import { http, HttpResponse } from "msw";
+import { busStopHandlers } from "@entities/busStop";
 
-export const handlers = [
-  http.get("/api/getBusStop", () => HttpResponse.json({ id: "abc-123" })),
-];
+export const handlers = [...busStopHandlers];
