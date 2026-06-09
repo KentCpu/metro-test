@@ -2,7 +2,7 @@ import { useBusStops } from "@entities/busStop";
 import { MapGL } from "@shared/ui";
 
 export function HomePage() {
-  const { data } = useBusStops();
+  useBusStops();
 
   return (
     <div
