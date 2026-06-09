@@ -3,11 +3,11 @@ import { MantineProvider } from "@mantine/core";
 import { Router } from "./router";
 
 function App() {
-	return (
-		<MantineProvider>
-			<Router />
-		</MantineProvider>
-	);
+  return (
+    <MantineProvider>
+      <Router />
+    </MantineProvider>
+  );
 }
 
 export default App;
