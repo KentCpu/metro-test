@@ -22,7 +22,7 @@ export const districtHandlers = [
     if (!district) {
       return HttpResponse.json(
         { error: { code: "NOT_FOUND", message: "Район не найден" } },
-        { status: 404 },
+        { status: 404 }
       );
     }
 

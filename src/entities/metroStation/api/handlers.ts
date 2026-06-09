@@ -22,7 +22,7 @@ export const metroStationHandlers = [
     if (!station) {
       return HttpResponse.json(
         { error: { code: "NOT_FOUND", message: "Станция не найдена" } },
-        { status: 404 },
+        { status: 404 }
       );
     }
 

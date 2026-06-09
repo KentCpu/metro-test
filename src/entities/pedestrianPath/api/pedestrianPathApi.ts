@@ -6,7 +6,7 @@ export async function fetchPedestrianPaths(): Promise<PedestrianPathListResponse
 }
 
 export async function fetchPedestrianPathById(
-  id: string,
+  id: string
 ): Promise<{ data: PedestrianPath }> {
   return server.get<{ data: PedestrianPath }>(`/getPedestrianPath/${id}`);
 }

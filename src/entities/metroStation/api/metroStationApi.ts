@@ -6,7 +6,7 @@ export async function fetchMetroStations(): Promise<MetroStationListResponse> {
 }
 
 export async function fetchMetroStationById(
-  id: string,
+  id: string
 ): Promise<{ data: MetroStation }> {
   return server.get<{ data: MetroStation }>(`/getMetroStation/${id}`);
 }

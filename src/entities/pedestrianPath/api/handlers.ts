@@ -22,7 +22,7 @@ export const pedestrianPathHandlers = [
     if (!path) {
       return HttpResponse.json(
         { error: { code: "NOT_FOUND", message: "Дорожка не найдена" } },
-        { status: 404 },
+        { status: 404 }
       );
     }
 

@@ -6,7 +6,7 @@ export async function fetchDistricts(): Promise<DistrictListResponse> {
 }
 
 export async function fetchDistrictById(
-  id: string,
+  id: string
 ): Promise<{ data: District }> {
   return server.get<{ data: District }>(`/getDistrict/${id}`);
 }
