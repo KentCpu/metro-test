@@ -1,6 +1,6 @@
 import type { MetroStation } from "@entities/metroStation";
 import { createIconPointLayer } from "../createIconPointLayer";
-import { MetroCard } from "./MetroCard";
+import { MetroCard } from "../../ui/MetroCard";
 import metroIconAtlas from "./metro-icon.png";
 
 const METRO_LAYER_ID = "metro-layer";
@@ -27,5 +27,6 @@ export const createMetroLayer = createIconPointLayer<MetroStation>({
   pointIconId: "metro-station",
   clusterIconId: "cluster",
   pointSize: 30,
+  listCardTitle: "Станции метро",
   renderCard: (item, onClose) => <MetroCard data={item} onClose={onClose} />,
 });

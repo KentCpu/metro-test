@@ -1,8 +1,8 @@
 import type { PickingInfo } from "@deck.gl/core";
 import { GeoJsonLayer } from "@deck.gl/layers";
 import type { PedestrianPath } from "@entities/pedestrianPath";
-import type { LayerCreator } from "../../types";
-import { PedestrianPathCard } from "./PedestrianPathCard";
+import type { LayerCreator } from "../types";
+import { PedestrianPathCard } from "../ui/PedestrianPathCard";
 
 const PEDESTRIAN_PATH_LAYER_ID = "pedestrian-path-layer";
 
@@ -44,7 +44,7 @@ export function createPedestrianPathLayer({
 
       onSelect({
         layerId: PEDESTRIAN_PATH_LAYER_ID,
-        data: path,
+        data: [path],
       });
     };
 

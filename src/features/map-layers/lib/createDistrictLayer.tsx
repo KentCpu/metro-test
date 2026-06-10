@@ -1,8 +1,8 @@
 import type { PickingInfo } from "@deck.gl/core";
 import { GeoJsonLayer } from "@deck.gl/layers";
 import type { District } from "@entities/district";
-import type { LayerCreator } from "../../types";
-import { DistrictCard } from "./DistrictCard";
+import type { LayerCreator } from "../types";
+import { DistrictCard } from "../ui/DistrictCard";
 
 const DISTRICT_LAYER_ID = "district-layer";
 
@@ -41,7 +41,7 @@ export function createDistrictLayer({
 
       onSelect({
         layerId: DISTRICT_LAYER_ID,
-        data: district,
+        data: [district],
       });
     };
 

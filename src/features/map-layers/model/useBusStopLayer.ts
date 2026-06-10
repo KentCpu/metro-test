@@ -20,7 +20,10 @@ export function useBusStopLayer({
     },
   }));
 
-  const mapPoints = useClusteredPoints(points, clusteringParams);
+  const { points: mapPoints, supercluster } = useClusteredPoints(
+    points,
+    clusteringParams
+  );
 
-  return createBusStopLayer({ data: mapPoints });
+  return createBusStopLayer({ data: mapPoints, supercluster });
 }

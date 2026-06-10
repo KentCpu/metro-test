@@ -1,7 +1,9 @@
 import type { PickingInfo } from "@deck.gl/core";
 import { IconLayer, type IconLayerProps } from "@deck.gl/layers";
 import type { ReactNode } from "react";
+import { ClusterListCard } from "../ui/ClusterListCard";
 import type {
+  ClusterIndex,
   LayerCreator,
   LayerCreatorParams,
   MapPointFeature,
@@ -17,10 +19,11 @@ interface IconPointLayerConfig<T> {
   clusterIconId: string;
   pointSize?: number;
   clusterSize?: number;
+  listCardTitle: string;
   renderCard: (item: T, onClose: () => void) => ReactNode;
 }
 
-export function createIconPointLayer<T>({
+export function createIconPointLayer<T extends { id: string; name: string }>({
   layerId,
   iconAtlas,
   iconMapping,
@@ -28,29 +31,22 @@ export function createIconPointLayer<T>({
   clusterIconId,
   pointSize = 32,
   clusterSize = 28,
+  listCardTitle,
   renderCard,
 }: IconPointLayerConfig<T>) {
   return function iconPointLayer({
     data,
+    supercluster,
   }: LayerCreatorParams<T>): LayerCreator<T> {
     return ({ onSelect }) => {
       const handleClick = (pickInfo: PickingInfo<MapPointFeature<T>>) => {
         const feature = pickInfo.object;
+        if (!feature) return;
 
-        if (!feature || feature.properties.cluster) {
-          return;
-        }
+        const data = getSelectedPointData(feature, supercluster);
+        if (!data) return;
 
-        const item = feature.properties.item;
-
-        if (!item) {
-          return;
-        }
-
-        onSelect({
-          layerId,
-          data: item,
-        });
+        onSelect({ layerId, data });
       };
 
       return {
@@ -71,7 +67,44 @@ export function createIconPointLayer<T>({
           pickable: true,
         }),
         renderCard: (item) => renderCard(item, () => onSelect(null)),
+        renderListCard: (items) => (
+          <ClusterListCard
+            items={items}
+            title={listCardTitle}
+            onClose={() => onSelect(null)}
+            onItemClick={(item) => onSelect({ layerId, data: [item] })}
+          />
+        ),
       };
     };
   };
+}
+
+function getClusterItems<T>(
+  feature: MapPointFeature<T>,
+  supercluster?: ClusterIndex<T>
+) {
+  const clusterId = feature.properties.cluster_id;
+  if (clusterId == null || !supercluster) {
+    return null;
+  }
+
+  const items = supercluster
+    .getLeaves(clusterId, Number.POSITIVE_INFINITY)
+    .map((leaf) => leaf.properties.item)
+    .filter((item): item is T => item != null);
+
+  return items.length > 0 ? items : null;
+}
+
+function getSelectedPointData<T>(
+  feature: MapPointFeature<T>,
+  supercluster?: ClusterIndex<T>
+) {
+  if (feature.properties.cluster) {
+    return getClusterItems(feature, supercluster);
+  }
+
+  const item = feature.properties.item;
+  return item ? [item] : null;
 }

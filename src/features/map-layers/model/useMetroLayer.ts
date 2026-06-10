@@ -20,7 +20,10 @@ export function useMetroLayer({
     },
   }));
 
-  const mapPoints = useClusteredPoints(points, clusteringParams);
+  const { points: mapPoints, supercluster } = useClusteredPoints(
+    points,
+    clusteringParams
+  );
 
-  return createMetroLayer({ data: mapPoints });
+  return createMetroLayer({ data: mapPoints, supercluster });
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { LayerCreator, SelectedLayerData } from "../types";
+import type { LayerCreator, LayerData, SelectedLayerData } from "../types";
 
 export function useMapLayersController(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,18 +10,31 @@ export function useMapLayersController(
   );
 
   const layersData = layerCreators.map((layerCreator) =>
-    layerCreator({ selected: selected?.data ?? null, onSelect: setSelected })
+    layerCreator({ selected, onSelect: setSelected })
   );
 
-  const currentLayer = selected
-    ? layersData.find((item) => item.id === selected.layerId)
-    : undefined;
+  const currentLayer = layersData.find((item) => item.id === selected?.layerId);
 
   return {
     layers: layersData.map((item) => item.layer),
     cardInfo:
-      currentLayer?.renderCard && selected
-        ? currentLayer.renderCard(selected.data)
+      selected && currentLayer
+        ? renderSelectedCard(selected, currentLayer)
         : undefined,
   };
+}
+
+function renderSelectedCard(
+  selected: SelectedLayerData<unknown>,
+  layer: LayerData<unknown>
+) {
+  const [item] = selected.data;
+
+  if (selected.data.length === 1) {
+    return layer.renderCard?.(item);
+  }
+
+  if (selected.data.length > 1) {
+    return layer.renderListCard?.(selected.data);
+  }
 }
