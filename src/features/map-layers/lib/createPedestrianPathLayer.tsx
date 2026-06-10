@@ -52,19 +52,21 @@ export function createPedestrianPathLayer({
 
     return {
       id: PEDESTRIAN_PATH_LAYER_ID,
-      layer: new GeoJsonLayer({
-        id: PEDESTRIAN_PATH_LAYER_ID,
-        data: geojson,
-        visible: visible && data.length > 0,
-        filled: false,
-        stroked: true,
-        getLineColor: (feature) =>
-          (feature.properties as PedestrianPath).lineColor,
-        getLineWidth: 4,
-        lineWidthMinPixels: 2,
-        pickable: true,
-        onClick: handleClick,
-      }),
+      layers: [
+        new GeoJsonLayer({
+          id: PEDESTRIAN_PATH_LAYER_ID,
+          data: geojson,
+          visible: visible && data.length > 0,
+          filled: false,
+          stroked: true,
+          getLineColor: (feature) =>
+            (feature.properties as PedestrianPath).lineColor,
+          getLineWidth: 4,
+          lineWidthMinPixels: 2,
+          pickable: true,
+          onClick: handleClick,
+        }),
+      ],
       renderCard: (item) => (
         <PedestrianPathCard data={item} onClose={() => onSelect(null)} />
       ),

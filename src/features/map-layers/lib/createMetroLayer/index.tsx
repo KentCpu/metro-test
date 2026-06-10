@@ -1,5 +1,5 @@
 import type { MetroStation } from "@entities/metroStation";
-import { createIconPointLayer } from "../createIconPointLayer";
+import { createClusteredIconPointLayer } from "../createClusteredIconPointLayer";
 import { MetroCard } from "../../ui/MetroCard";
 import metroIconAtlas from "./metro-icon.png";
 
@@ -20,13 +20,15 @@ const ICON_MAPPING = {
   },
 } as const;
 
-export const createMetroLayer = createIconPointLayer<MetroStation>({
+export const createMetroLayer = createClusteredIconPointLayer<MetroStation>({
   layerId: METRO_LAYER_ID,
   iconAtlas: metroIconAtlas,
   iconMapping: ICON_MAPPING,
   pointIconId: "metro-station",
   clusterIconId: "cluster",
   pointSize: 30,
+  clusterSize: 40,
   listCardTitle: "Станции метро",
+  getCoordinates: (station) => station.coordinates,
   renderCard: (item, onClose) => <MetroCard data={item} onClose={onClose} />,
 });

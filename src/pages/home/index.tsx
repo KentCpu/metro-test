@@ -6,9 +6,7 @@ import { CreateBusStop } from "@features/create-bus-stop";
 import {
   createDistrictLayer,
   createPedestrianPathLayer,
-  useBusStopLayer,
   useMapLayersController,
-  useMetroLayer,
 } from "@features/map-layers";
 import { Flex, MapGL } from "@shared/ui";
 import { Page } from "@widgets/page";
@@ -16,6 +14,8 @@ import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
 import { MapLayersMenu } from "./MapLayersMenu";
 import { useLayerVisibility } from "./MapLayersMenu/useLayerVisibility";
+import { createMetroLayer } from "@features/map-layers/lib/createMetroLayer";
+import { createBusStopLayer } from "@features/map-layers/lib/createBusStopLayer";
 
 const INITIAL_VIEW_STATE: MapViewState = {
   longitude: 37.6176,
@@ -33,31 +33,25 @@ export function HomePage() {
   const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
   const [layerVisibility, setLayerVisibility] = useLayerVisibility();
 
-  const busStopLayer = useBusStopLayer({
-    busStops,
-    enableClustering: true,
-    viewState,
-    visible: layerVisibility["bus-stop-layer"],
-  });
-
-  const metroLayer = useMetroLayer({
-    stations: metro,
-    enableClustering: true,
-    viewState,
-    visible: layerVisibility["metro-layer"],
-  });
-
   const map = useMapLayersController([
     createDistrictLayer({
       data: districts ?? [],
       visible: layerVisibility["district-layer"],
     }),
+    createBusStopLayer({
+      data: busStops || [],
+      enableClustering: true,
+      visible: layerVisibility["bus-stop-layer"],
+    }),
+    createMetroLayer({
+      data: metro || [],
+      enableClustering: true,
+      visible: layerVisibility["metro-layer"],
+    }),
     createPedestrianPathLayer({
       data: pedestrianPaths ?? [],
       visible: layerVisibility["pedestrian-path-layer"],
     }),
-    busStopLayer,
-    metroLayer,
   ]);
 
   return (

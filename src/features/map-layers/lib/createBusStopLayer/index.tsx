@@ -1,5 +1,5 @@
 import type { BusStop } from "@entities/busStop";
-import { createIconPointLayer } from "../createIconPointLayer";
+import { createClusteredIconPointLayer } from "../createClusteredIconPointLayer";
 import { BusStopCard } from "../../ui/BusStopCard";
 import busStopAtlas from "./bus-stop-icon.png";
 
@@ -20,13 +20,15 @@ const ICON_MAPPING = {
   },
 } as const;
 
-export const createBusStopLayer = createIconPointLayer<BusStop>({
+export const createBusStopLayer = createClusteredIconPointLayer<BusStop>({
   layerId: BUS_STOP_LAYER_ID,
   iconAtlas: busStopAtlas,
   iconMapping: ICON_MAPPING,
   pointIconId: "bus-stop",
   clusterIconId: "cluster",
   pointSize: 36,
+  clusterSize: 48,
   listCardTitle: "Остановки",
+  getCoordinates: (stop) => stop.coordinates,
   renderCard: (item, onClose) => <BusStopCard data={item} onClose={onClose} />,
 });

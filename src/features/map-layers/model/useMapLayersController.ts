@@ -10,28 +10,27 @@ export function useMapLayersController(
   );
 
   const layersData = layerCreators.map((layerCreator) =>
-    layerCreator({ selected, onSelect: setSelected })
+    layerCreator({ onSelect: setSelected })
   );
 
-  const currentLayer = layersData.find((item) => item.id === selected?.layerId);
+  const currentLayer = selected
+    ? layersData.find((item) => item.id === selected.layerId)
+    : undefined;
 
-  return {
-    layers: layersData.map((item) => item.layer),
-    cardInfo:
-      selected && currentLayer
-        ? renderSelectedCard(selected, currentLayer)
-        : undefined,
-  };
+  const cardInfo =
+    selected && currentLayer
+      ? renderSelectedCard(selected, currentLayer)
+      : undefined;
+
+  return { layers: layersData.map((layerData) => layerData.layers), cardInfo };
 }
 
 function renderSelectedCard(
   selected: SelectedLayerData<unknown>,
   layer: LayerData<unknown>
 ) {
-  const [item] = selected.data;
-
   if (selected.data.length === 1) {
-    return layer.renderCard?.(item);
+    return layer.renderCard?.(selected.data.at(0));
   }
 
   if (selected.data.length > 1) {

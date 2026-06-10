@@ -48,18 +48,20 @@ export function createDistrictLayer({
 
     return {
       id: DISTRICT_LAYER_ID,
-      layer: new GeoJsonLayer({
-        id: DISTRICT_LAYER_ID,
-        data: geojson,
-        visible: visible && data.length > 0,
-        filled: true,
-        stroked: true,
-        getFillColor: (feature) => (feature.properties as District).fillColor,
-        getLineColor: (feature) => (feature.properties as District).lineColor,
-        getLineWidth: 2,
-        pickable: true,
-        onClick: handleClick,
-      }),
+      layers: [
+        new GeoJsonLayer({
+          id: DISTRICT_LAYER_ID,
+          data: geojson,
+          visible: visible && data.length > 0,
+          filled: true,
+          stroked: true,
+          getFillColor: (feature) => (feature.properties as District).fillColor,
+          getLineColor: (feature) => (feature.properties as District).lineColor,
+          getLineWidth: 2,
+          pickable: true,
+          onClick: handleClick,
+        }),
+      ],
       renderCard: (item) => (
         <DistrictCard data={item} onClose={() => onSelect(null)} />
       ),
