@@ -7,4 +7,3 @@ export interface District {
   /** GeoJSON Polygon: rings of [longitude, latitude] pairs */
   coordinates: [number, number][][];
 }
-

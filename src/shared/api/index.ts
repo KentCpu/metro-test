@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 
 const SERVER_API_PATH = "/api";
 
-export const server = axios.create({
+const axiosInstance = axios.create({
   baseURL: SERVER_API_PATH,
   headers: {
     "Cache-Control": "no-cache",
@@ -10,7 +10,19 @@ export const server = axios.create({
   },
 });
 
-server.interceptors.response.use(
-  (response) => response.data,
-  (error) => Promise.reject(error)
-);
+export const server = {
+  get: <T>(url: string, config?: AxiosRequestConfig) =>
+    axiosInstance.get<T>(url, config).then((res) => res.data),
+
+  post: <T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig) =>
+    axiosInstance.post<T>(url, data, config).then((res) => res.data),
+
+  put: <T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig) =>
+    axiosInstance.put<T>(url, data, config).then((res) => res.data),
+
+  patch: <T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig) =>
+    axiosInstance.patch<T>(url, data, config).then((res) => res.data),
+
+  delete: <T>(url: string, config?: AxiosRequestConfig) =>
+    axiosInstance.delete<T>(url, config).then((res) => res.data),
+};

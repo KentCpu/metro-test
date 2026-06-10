@@ -1,9 +1,10 @@
+import { server } from "@shared/api";
 import { useQuery } from "@tanstack/react-query";
-import { fetchDistricts } from "../api/districtApi";
+import type { District } from "../api/types";
 
 export function useDistricts() {
-  return useQuery({
+  return useQuery<District[]>({
     queryKey: ["districts"],
-    queryFn: fetchDistricts,
+    queryFn: ({ signal }) => server.get<District[]>("/district", { signal }),
   });
 }

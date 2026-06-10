@@ -7,4 +7,3 @@ export interface BusStop {
   routes: string[];
   address?: string;
 }
-

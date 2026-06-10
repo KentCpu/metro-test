@@ -6,4 +6,3 @@ export interface PedestrianPath {
   coordinates: [number, number][];
   lengthMeters?: number;
 }
-

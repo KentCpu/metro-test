@@ -1,9 +1,11 @@
+import { server } from "@shared/api";
 import { useQuery } from "@tanstack/react-query";
-import { fetchPedestrianPaths } from "../api/pedestrianPathApi";
+import type { PedestrianPath } from "../api/types";
 
 export function usePedestrianPaths() {
-  return useQuery({
+  return useQuery<PedestrianPath[]>({
     queryKey: ["pedestrian-paths"],
-    queryFn: fetchPedestrianPaths,
+    queryFn: ({ signal }) =>
+      server.get<PedestrianPath[]>("/pedestrian-path", { signal }),
   });
 }

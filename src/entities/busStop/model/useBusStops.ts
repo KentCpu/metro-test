@@ -1,9 +1,10 @@
+import { server } from "@shared/api";
 import { useQuery } from "@tanstack/react-query";
-import { fetchBusStops } from "../api/busStopApi";
+import type { BusStop } from "../api/types";
 
 export function useBusStops() {
-  return useQuery({
+  return useQuery<BusStop[]>({
     queryKey: ["bus-stops"],
-    queryFn: () => fetchBusStops(),
+    queryFn: ({ signal }) => server.get<BusStop[]>("/bus-stop", { signal }),
   });
 }

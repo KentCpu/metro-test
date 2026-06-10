@@ -1,9 +1,11 @@
+import { server } from "@shared/api";
 import { useQuery } from "@tanstack/react-query";
-import { fetchMetroStations } from "../api/metroStationApi";
+import type { MetroStation } from "../api/types";
 
 export function useMetroStations() {
-  return useQuery({
+  return useQuery<MetroStation[]>({
     queryKey: ["metro-stations"],
-    queryFn: fetchMetroStations,
+    queryFn: ({ signal }) =>
+      server.get<MetroStation[]>("/metro-station", { signal }),
   });
 }
