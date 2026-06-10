@@ -1,6 +1,7 @@
 export { MapGL } from "./MapGL";
 export { Button } from "./Button";
 export { Center } from "./Center";
+export { Flex } from "./Flex";
 export { List } from "./List";
 export { Modal } from "./Modal";
 export { Stack } from "./Stack";

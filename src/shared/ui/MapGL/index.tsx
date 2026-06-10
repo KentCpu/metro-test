@@ -27,7 +27,7 @@ interface Props extends Omit<DeckProps, "height" | "width"> {
 
 export const MapGL = memo(function MapGL(props: Props) {
   return (
-    <div className={styles["map-container"]} style={{ position: "relative" }}>
+    <div className={styles["map-container"]}>
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={CONTROLS}

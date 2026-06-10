@@ -14,6 +14,7 @@ export default defineConfig({
       "@pages": path.resolve(__dirname, "src/pages"),
       "@features": path.resolve(__dirname, "src/features"),
       "@shared": path.resolve(__dirname, "src/shared"),
+      "@widgets": path.resolve(__dirname, "src/widgets"),
     },
   },
 });

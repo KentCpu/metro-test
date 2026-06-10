@@ -10,6 +10,7 @@ import {
   useMetroLayer,
 } from "@features/map-layers";
 import { MapGL } from "@shared/ui";
+import { Page } from "@widgets/page";
 import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
 
@@ -48,21 +49,12 @@ export function HomePage() {
   ]);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "relative",
-        flex: "auto",
-      }}
-    >
+    <Page>
       <MapGL
         {...map}
         viewState={viewState}
-        onViewStateChange={({ viewState: nextViewState }) =>
-          setViewState(nextViewState)
-        }
+        onViewStateChange={({ viewState }) => setViewState(viewState)}
       />
-    </div>
+    </Page>
   );
 }
