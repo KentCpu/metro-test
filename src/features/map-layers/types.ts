@@ -37,6 +37,7 @@ export type LayerCreator<TData> = (params: {
 export type LayerCreatorParams<TData> = {
   data: MapPointFeature<TData>[];
   supercluster?: ClusterIndex<TData>;
+  visible?: boolean;
 };
 
 export type WithoutClustering = {

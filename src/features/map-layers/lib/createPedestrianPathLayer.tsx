@@ -8,6 +8,7 @@ const PEDESTRIAN_PATH_LAYER_ID = "pedestrian-path-layer";
 
 type PedestrianPathLayerCreatorParams = {
   data: PedestrianPath[];
+  visible?: boolean;
 };
 
 type PedestrianPathFeature = GeoJSON.Feature<
@@ -31,6 +32,7 @@ function pathsToGeoJson(paths: PedestrianPath[]): GeoJSON.FeatureCollection {
 
 export function createPedestrianPathLayer({
   data,
+  visible = true,
 }: PedestrianPathLayerCreatorParams): LayerCreator<PedestrianPath> {
   const geojson = pathsToGeoJson(data);
 
@@ -50,10 +52,10 @@ export function createPedestrianPathLayer({
 
     return {
       id: PEDESTRIAN_PATH_LAYER_ID,
-      visible: data.length > 0,
       layer: new GeoJsonLayer({
         id: PEDESTRIAN_PATH_LAYER_ID,
         data: geojson,
+        visible: visible && data.length > 0,
         filled: false,
         stroked: true,
         getLineColor: (feature) =>

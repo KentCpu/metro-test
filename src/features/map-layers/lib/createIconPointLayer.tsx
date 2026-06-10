@@ -37,6 +37,7 @@ export function createIconPointLayer<T extends { id: string; name: string }>({
   return function iconPointLayer({
     data,
     supercluster,
+    visible = true,
   }: LayerCreatorParams<T>): LayerCreator<T> {
     return ({ onSelect }) => {
       const handleClick = (pickInfo: PickingInfo<MapPointFeature<T>>) => {
@@ -51,12 +52,12 @@ export function createIconPointLayer<T extends { id: string; name: string }>({
 
       return {
         id: layerId,
-        visible: data.length > 0,
         layer: new IconLayer<MapPointFeature<T>>({
           id: layerId,
           iconAtlas,
           iconMapping,
           data,
+          visible: visible && data.length > 0,
           getIcon: (feature) =>
             feature.properties.cluster ? clusterIconId : pointIconId,
           getPosition: (feature) =>

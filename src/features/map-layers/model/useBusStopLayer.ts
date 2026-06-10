@@ -5,10 +5,12 @@ import { useClusteredPoints } from "./useClusteredPoints";
 
 type UseBusStopLayerParams = {
   busStops?: readonly BusStop[];
+  visible?: boolean;
 } & ClusteringParams;
 
 export function useBusStopLayer({
   busStops = [],
+  visible = true,
   ...clusteringParams
 }: UseBusStopLayerParams): LayerCreator<BusStop> {
   const points = busStops.map((stop) => ({
@@ -25,5 +27,5 @@ export function useBusStopLayer({
     clusteringParams
   );
 
-  return createBusStopLayer({ data: mapPoints, supercluster });
+  return createBusStopLayer({ data: mapPoints, supercluster, visible });
 }

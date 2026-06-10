@@ -5,10 +5,12 @@ import { useClusteredPoints } from "./useClusteredPoints";
 
 type UseMetroLayerParams = {
   stations?: readonly MetroStation[];
+  visible?: boolean;
 } & ClusteringParams;
 
 export function useMetroLayer({
   stations = [],
+  visible = true,
   ...clusteringParams
 }: UseMetroLayerParams): LayerCreator<MetroStation> {
   const points = stations.map((station) => ({
@@ -25,5 +27,5 @@ export function useMetroLayer({
     clusteringParams
   );
 
-  return createMetroLayer({ data: mapPoints, supercluster });
+  return createMetroLayer({ data: mapPoints, supercluster, visible });
 }

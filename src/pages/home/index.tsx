@@ -2,6 +2,7 @@ import { useBusStops } from "@entities/busStop";
 import { useDistricts } from "@entities/district";
 import { useMetroStations } from "@entities/metroStation";
 import { usePedestrianPaths } from "@entities/pedestrianPath";
+import { CreateBusStop } from "@features/create-bus-stop";
 import {
   createDistrictLayer,
   createPedestrianPathLayer,
@@ -9,11 +10,12 @@ import {
   useMapLayersController,
   useMetroLayer,
 } from "@features/map-layers";
-import { CreateBusStop } from "@features/create-bus-stop";
 import { Flex, MapGL } from "@shared/ui";
 import { Page } from "@widgets/page";
 import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
+import { MapLayersMenu } from "./MapLayersMenu";
+import { useLayerVisibility } from "./MapLayersMenu/useLayerVisibility";
 
 const INITIAL_VIEW_STATE: MapViewState = {
   longitude: 37.6176,
@@ -29,22 +31,31 @@ export function HomePage() {
   const { data: districts } = useDistricts();
   const { data: pedestrianPaths } = usePedestrianPaths();
   const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
+  const [layerVisibility, setLayerVisibility] = useLayerVisibility();
 
   const busStopLayer = useBusStopLayer({
     busStops,
     enableClustering: true,
     viewState,
+    visible: layerVisibility["bus-stop-layer"],
   });
 
   const metroLayer = useMetroLayer({
     stations: metro,
     enableClustering: true,
     viewState,
+    visible: layerVisibility["metro-layer"],
   });
 
   const map = useMapLayersController([
-    createDistrictLayer({ data: districts ?? [] }),
-    createPedestrianPathLayer({ data: pedestrianPaths ?? [] }),
+    createDistrictLayer({
+      data: districts ?? [],
+      visible: layerVisibility["district-layer"],
+    }),
+    createPedestrianPathLayer({
+      data: pedestrianPaths ?? [],
+      visible: layerVisibility["pedestrian-path-layer"],
+    }),
     busStopLayer,
     metroLayer,
   ]);
@@ -52,7 +63,13 @@ export function HomePage() {
   return (
     <Page>
       <Flex direction="column" flex={1} gap="sm" mih={0} w="100%">
-        <CreateBusStop />
+        <Flex gap="sm">
+          <CreateBusStop />
+          <MapLayersMenu
+            layerVisibility={layerVisibility}
+            onChangeLayerVisible={setLayerVisibility}
+          />
+        </Flex>
         <MapGL
           {...map}
           viewState={viewState}
