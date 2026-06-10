@@ -1,5 +1,4 @@
 import { WebMercatorViewport } from "@deck.gl/core";
-import { useMemo } from "react";
 import useSupercluster from "use-supercluster";
 import type {
   ClusterIndex,
@@ -18,14 +17,6 @@ export function useClusteredPoints<T>(
 ): { points: MapPointFeature<T>[]; supercluster?: ClusterIndex<T> } {
   const clusteringEnabled = isClusteringEnabled(clustering);
 
-  const bounds = useMemo(() => {
-    if (!clusteringEnabled) {
-      return DEFAULT_BOUNDS;
-    }
-
-    return new WebMercatorViewport(clustering.viewState).getBounds();
-  }, [clusteringEnabled, clustering]);
-
   const options = {
     radius: clusteringEnabled
       ? (clustering.clusterRadius ?? DEFAULT_CLUSTER_RADIUS)
@@ -37,7 +28,9 @@ export function useClusteredPoints<T>(
 
   const { clusters, supercluster } = useSupercluster({
     points,
-    bounds,
+    bounds: clusteringEnabled
+      ? new WebMercatorViewport(clustering.viewState).getBounds()
+      : DEFAULT_BOUNDS,
     zoom: clusteringEnabled ? clustering.viewState.zoom : 0,
     options,
     disableRefresh: !clusteringEnabled,
