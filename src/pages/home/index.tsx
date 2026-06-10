@@ -9,7 +9,8 @@ import {
   useMapLayersController,
   useMetroLayer,
 } from "@features/map-layers";
-import { MapGL } from "@shared/ui";
+import { CreateBusStop } from "@features/create-bus-stop";
+import { Flex, MapGL } from "@shared/ui";
 import { Page } from "@widgets/page";
 import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
@@ -50,11 +51,14 @@ export function HomePage() {
 
   return (
     <Page>
-      <MapGL
-        {...map}
-        viewState={viewState}
-        onViewStateChange={({ viewState }) => setViewState(viewState)}
-      />
+      <Flex direction="column" flex={1} gap="sm" mih={0} w="100%">
+        <CreateBusStop />
+        <MapGL
+          {...map}
+          viewState={viewState}
+          onViewStateChange={({ viewState }) => setViewState(viewState)}
+        />
+      </Flex>
     </Page>
   );
 }
