@@ -11,9 +11,3 @@ export interface MetroStation {
   address?: string;
 }
 
-export interface MetroStationListResponse {
-  data: MetroStation[];
-  meta: {
-    total: number;
-  };
-}

@@ -8,9 +8,3 @@ export interface District {
   coordinates: [number, number][][];
 }
 
-export interface DistrictListResponse {
-  data: District[];
-  meta: {
-    total: number;
-  };
-}

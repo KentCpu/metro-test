@@ -26,19 +26,19 @@ export function HomePage() {
   const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
 
   const busStopLayer = useBusStopLayer({
-    busStops: busStops?.data,
+    busStops,
     enableClustering: true,
     viewState,
   });
 
   const metroLayer = useMetroLayer({
-    stations: metro?.data,
+    stations: metro,
     enableClustering: true,
     viewState,
   });
 
   const map = useMapLayersController([
-    createDistrictLayer({ data: districts?.data || [] }),
+    createDistrictLayer({ data: districts ?? [] }),
     busStopLayer,
     metroLayer,
   ]);

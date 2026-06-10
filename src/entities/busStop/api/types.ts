@@ -8,9 +8,3 @@ export interface BusStop {
   address?: string;
 }
 
-export interface BusStopListResponse {
-  data: BusStop[];
-  meta: {
-    total: number;
-  };
-}

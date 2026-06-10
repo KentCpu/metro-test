@@ -1,17 +1,10 @@
 import { delay, http, HttpResponse } from "msw";
 import { MOSCOW_METRO_STATIONS } from "./mocks";
-import type { MetroStationListResponse } from "./types";
 
 export const metroStationHandlers = [
   http.get("/api/getMetroStation", async () => {
     await delay(300);
-
-    const response: MetroStationListResponse = {
-      data: MOSCOW_METRO_STATIONS,
-      meta: { total: MOSCOW_METRO_STATIONS.length },
-    };
-
-    return HttpResponse.json(response);
+    return HttpResponse.json(MOSCOW_METRO_STATIONS);
   }),
 
   http.get("/api/getMetroStation/:id", async ({ params }) => {
@@ -26,6 +19,6 @@ export const metroStationHandlers = [
       );
     }
 
-    return HttpResponse.json({ data: station });
+    return HttpResponse.json(station);
   }),
 ];

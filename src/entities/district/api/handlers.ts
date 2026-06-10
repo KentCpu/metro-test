@@ -1,17 +1,10 @@
 import { delay, http, HttpResponse } from "msw";
 import { MOSCOW_DISTRICTS } from "./mocks";
-import type { DistrictListResponse } from "./types";
 
 export const districtHandlers = [
   http.get("/api/getDistrict", async () => {
     await delay(300);
-
-    const response: DistrictListResponse = {
-      data: MOSCOW_DISTRICTS,
-      meta: { total: MOSCOW_DISTRICTS.length },
-    };
-
-    return HttpResponse.json(response);
+    return HttpResponse.json(MOSCOW_DISTRICTS);
   }),
 
   http.get("/api/getDistrict/:id", async ({ params }) => {
@@ -26,6 +19,6 @@ export const districtHandlers = [
       );
     }
 
-    return HttpResponse.json({ data: district });
+    return HttpResponse.json(district);
   }),
 ];

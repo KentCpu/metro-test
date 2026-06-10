@@ -7,9 +7,3 @@ export interface PedestrianPath {
   lengthMeters?: number;
 }
 
-export interface PedestrianPathListResponse {
-  data: PedestrianPath[];
-  meta: {
-    total: number;
-  };
-}

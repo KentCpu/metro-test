@@ -1,17 +1,10 @@
 import { delay, http, HttpResponse } from "msw";
 import { MOSCOW_PEDESTRIAN_PATHS } from "./mocks";
-import type { PedestrianPathListResponse } from "./types";
 
 export const pedestrianPathHandlers = [
   http.get("/api/getPedestrianPath", async () => {
     await delay(300);
-
-    const response: PedestrianPathListResponse = {
-      data: MOSCOW_PEDESTRIAN_PATHS,
-      meta: { total: MOSCOW_PEDESTRIAN_PATHS.length },
-    };
-
-    return HttpResponse.json(response);
+    return HttpResponse.json(MOSCOW_PEDESTRIAN_PATHS);
   }),
 
   http.get("/api/getPedestrianPath/:id", async ({ params }) => {
@@ -26,6 +19,6 @@ export const pedestrianPathHandlers = [
       );
     }
 
-    return HttpResponse.json({ data: path });
+    return HttpResponse.json(path);
   }),
 ];
