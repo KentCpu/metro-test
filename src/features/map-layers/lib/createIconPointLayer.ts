@@ -1,7 +1,11 @@
 import type { PickingInfo } from "@deck.gl/core";
 import { IconLayer, type IconLayerProps } from "@deck.gl/layers";
 import type { ReactNode } from "react";
-import type { LayerCreator, LayerCreatorParams, MapPointFeature } from "../types";
+import type {
+  LayerCreator,
+  LayerCreatorParams,
+  MapPointFeature,
+} from "../types";
 
 type IconMapping = IconLayerProps<MapPointFeature<unknown>>["iconMapping"];
 

@@ -1,56 +1,52 @@
 import { WebMercatorViewport } from "@deck.gl/core";
 import { useMemo } from "react";
 import useSupercluster from "use-supercluster";
-import {
-  type ClusteringParams,
-  type GeoMapItem,
-  type MapPointFeature,
-  type WithClustering,
+import type {
+  ClusteringParams,
+  MapPointFeature,
+  WithClustering,
 } from "../types";
 
+const DEFAULT_CLUSTER_RADIUS = 40;
+const DEFAULT_MAX_ZOOM = 16;
+const DEFAULT_BOUNDS: [number, number, number, number] = [
+  -180, -85, 180, 85,
+];
 
-export function useClusteredPoints<T extends GeoMapItem>(
-  items: readonly T[] | null,
-  clustering: ClusteringParams = {}
+export function useClusteredPoints<T>(
+  points: MapPointFeature<T>[],
+  clustering: ClusteringParams = {},
 ): MapPointFeature<T>[] {
-  const points = (items || [])?.map((item) => toPointFeature(item));
-
   const clusteringEnabled = isClusteringEnabled(clustering);
+
   const bounds = useMemo(() => {
     if (!clusteringEnabled) {
-      return undefined;
+      return DEFAULT_BOUNDS;
     }
 
     return new WebMercatorViewport(clustering.viewState).getBounds();
   }, [clusteringEnabled, clustering]);
 
+  const options = {
+    radius: clusteringEnabled
+      ? (clustering.clusterRadius ?? DEFAULT_CLUSTER_RADIUS)
+      : DEFAULT_CLUSTER_RADIUS,
+    maxZoom: clusteringEnabled
+      ? (clustering.maxZoom ?? DEFAULT_MAX_ZOOM)
+      : DEFAULT_MAX_ZOOM,
+  };
 
   const { clusters } = useSupercluster({
     points,
     bounds,
-    zoom: clusteringEnabled ? clustering.viewState.zoom : 0,
-    options: {
-      radius: clusteringEnabled ? (clustering.clusterRadius ?? 40) : 40,
-      maxZoom: clusteringEnabled ? (clustering.maxZoom ?? 16) : 16,
-    },
+    zoom: clusteringEnabled
+      ? Math.floor(clustering.viewState.zoom)
+      : 0,
+    options,
     disableRefresh: !clusteringEnabled,
   });
 
   return clusteringEnabled ? clusters : points;
-}
-
-function toPointFeature<T extends GeoMapItem>(item: T): MapPointFeature<T> {
-  return {
-    type: "Feature",
-    properties: {
-      cluster: false,
-      item,
-    },
-    geometry: {
-      type: "Point",
-      coordinates: item.coordinates,
-    },
-  };
 }
 
 function isClusteringEnabled(

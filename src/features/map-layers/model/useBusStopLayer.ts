@@ -11,7 +11,16 @@ export function useBusStopLayer({
   busStops = [],
   ...clusteringParams
 }: UseBusStopLayerParams): LayerCreator<BusStop> {
-  const mapPoints = useClusteredPoints(busStops, clusteringParams);
+  const points = busStops.map((stop) => ({
+    type: "Feature" as const,
+    properties: { cluster: false as const, item: stop },
+    geometry: {
+      type: "Point" as const,
+      coordinates: stop.coordinates,
+    },
+  }));
+
+  const mapPoints = useClusteredPoints(points, clusteringParams);
 
   return createBusStopLayer({ data: mapPoints });
 }

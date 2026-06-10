@@ -6,11 +6,6 @@ export type SelectedLayerData<T> = {
   data: T;
 };
 
-export interface GeoMapItem {
-  id: string;
-  coordinates: [number, number];
-}
-
 export type MapPointProperties<T> = {
   cluster: boolean;
   cluster_id?: number;

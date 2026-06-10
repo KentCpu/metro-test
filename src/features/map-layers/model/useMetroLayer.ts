@@ -4,14 +4,23 @@ import type { ClusteringParams, LayerCreator } from "../types";
 import { useClusteredPoints } from "./useClusteredPoints";
 
 type UseMetroLayerParams = {
-  stations: readonly MetroStation[];
+  stations?: readonly MetroStation[];
 } & ClusteringParams;
 
 export function useMetroLayer({
-  stations,
+  stations = [],
   ...clusteringParams
 }: UseMetroLayerParams): LayerCreator<MetroStation> {
-  const mapPoints = useClusteredPoints(stations, clusteringParams);
+  const points = stations.map((station) => ({
+    type: "Feature" as const,
+    properties: { cluster: false as const, item: station },
+    geometry: {
+      type: "Point" as const,
+      coordinates: station.coordinates,
+    },
+  }));
+
+  const mapPoints = useClusteredPoints(points, clusteringParams);
 
   return createMetroLayer({ data: mapPoints });
 }
