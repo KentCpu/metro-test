@@ -1,35 +1,35 @@
-import type { BusStop } from "@entities/busStop";
 import { IconLayer } from "@deck.gl/layers";
-import busStopAtlas from "./bus-stop-icon.png";
+import metroIconAtlas from "./metro-icon.png";
 import type { LayerCreator, LayerCreatorParams } from "../types";
-import { BusStopCard } from "./BusStopCard";
 import type { PickingInfo } from "@deck.gl/core";
+import type { MetroStation } from "@entities/metroStation";
+import { MetroCard } from "./MetroCard";
 
-const BUS_STOP_LAYER_ID = "BUS_STOP_LAYER_ID";
+const METRO_LAYER_ID = "METRO_LAYER_ID";
 
-export function createBusStopLayer({
+export function createMetroLayer({
   data,
-}: LayerCreatorParams<BusStop>): LayerCreator<BusStop> {
+}: LayerCreatorParams<MetroStation>): LayerCreator<MetroStation> {
   return ({ onSelect }) => {
-    const handleClick = (pickInfo: PickingInfo<BusStop>) => {
+    const handleClick = (pickInfo: PickingInfo<MetroStation>) => {
       if (!pickInfo.object) {
         return;
       }
 
       onSelect({
-        layerId: BUS_STOP_LAYER_ID,
+        layerId: METRO_LAYER_ID,
         data: pickInfo.object,
       });
     };
 
     return {
-      id: BUS_STOP_LAYER_ID,
+      id: METRO_LAYER_ID,
       visible: data && data.length > 0,
-      layer: new IconLayer<BusStop>({
-        id: BUS_STOP_LAYER_ID,
-        iconAtlas: busStopAtlas,
+      layer: new IconLayer<MetroStation>({
+        id: METRO_LAYER_ID,
+        iconAtlas: metroIconAtlas,
         iconMapping: {
-          "bus-stop": {
+          "metro-station": {
             x: 0,
             y: 0,
             width: 64,
@@ -37,14 +37,14 @@ export function createBusStopLayer({
           },
         },
         data,
-        getIcon: () => "bus-stop",
+        getIcon: () => "metro-station",
         getPosition: (busStop) => busStop.coordinates,
         onClick: handleClick,
-        sizeScale: 40,
+        sizeScale: 30,
         pickable: true,
       }),
       renderCard: (data) => (
-        <BusStopCard data={data} onClose={() => onSelect(null)} />
+        <MetroCard data={data} onClose={() => onSelect(null)} />
       ),
     };
   };

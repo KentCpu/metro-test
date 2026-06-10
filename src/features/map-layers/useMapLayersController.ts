@@ -6,11 +6,9 @@ export function useMapLayersController(
 ) {
   const [selected, setSelected] = useState<SelectedLayerData<unknown> | null>();
 
-  const layersData = layerCreators
-    .map((layerCreator) =>
-      layerCreator({ selected: selected?.data ?? null, onSelect: setSelected })
-    )
-    .filter((layer) => layer.visible);
+  const layersData = layerCreators.map((layerCreator) =>
+    layerCreator({ selected: selected?.data ?? null, onSelect: setSelected })
+  );
 
   const currentLayer = selected
     ? layersData.find((item) => item.id === selected.layerId)

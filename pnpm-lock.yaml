@@ -53,6 +53,9 @@ importers:
       react-router:
         specifier: ^7.17.0
         version: 7.17.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      supercluster:
+        specifier: ^8.0.1
+        version: 8.0.1
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -1989,6 +1992,9 @@ packages:
     engines: {node: '>=18.0'}
     peerDependencies:
       postcss: ^8.3.3
+
+  supercluster@8.0.1:
+    resolution: {integrity: sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -4198,6 +4204,10 @@ snapshots:
   sugarss@5.0.1(postcss@8.5.15):
     dependencies:
       postcss: 8.5.15
+
+  supercluster@8.0.1:
+    dependencies:
+      kdbush: 4.1.0
 
   supports-color@7.2.0:
     dependencies:

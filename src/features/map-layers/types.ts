@@ -19,6 +19,5 @@ export type LayerCreator<TData> = (params: {
 
 export type LayerCreatorParams<TData> = {
   data: TData[];
-  visible?: boolean;
   renderCard?: (item: TData) => React.ReactNode;
 };
