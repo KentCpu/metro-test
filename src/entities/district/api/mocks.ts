@@ -9,6 +9,8 @@ export const MOSCOW_DISTRICTS: District[] = [
     id: "district-001",
     name: "Тверской",
     description: "Центральный административный округ, историческое ядро города",
+    fillColor: [66, 133, 244, 80],
+    lineColor: [66, 133, 244, 200],
     coordinates: [
       [
         [37.582, 55.749],
@@ -23,6 +25,8 @@ export const MOSCOW_DISTRICTS: District[] = [
     id: "district-002",
     name: "Басманный",
     description: "Район с Курским вокзалом и Садовым кольцом на востоке",
+    fillColor: [219, 68, 55, 80],
+    lineColor: [219, 68, 55, 200],
     coordinates: [
       [
         [37.638, 55.752],
@@ -37,6 +41,8 @@ export const MOSCOW_DISTRICTS: District[] = [
     id: "district-003",
     name: "Мещанский",
     description: "Район вокруг Сретенского бульвара и проспекта Мира",
+    fillColor: [15, 157, 88, 80],
+    lineColor: [15, 157, 88, 200],
     coordinates: [
       [
         [37.622, 55.766],
@@ -51,6 +57,8 @@ export const MOSCOW_DISTRICTS: District[] = [
     id: "district-004",
     name: "Хамовники",
     description: "Район у Парка Горького и Крымского моста",
+    fillColor: [244, 180, 0, 80],
+    lineColor: [244, 180, 0, 200],
     coordinates: [
       [
         [37.572, 55.726],
@@ -65,6 +73,8 @@ export const MOSCOW_DISTRICTS: District[] = [
     id: "district-005",
     name: "Арбат",
     description: "Район Старого и Нового Арбата",
+    fillColor: [171, 71, 188, 80],
+    lineColor: [171, 71, 188, 200],
     coordinates: [
       [
         [37.572, 55.748],

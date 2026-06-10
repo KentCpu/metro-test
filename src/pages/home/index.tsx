@@ -1,6 +1,8 @@
 import { useBusStops } from "@entities/busStop";
+import { useDistricts } from "@entities/district";
 import { useMetroStations } from "@entities/metroStation";
 import {
+  createDistrictLayer,
   useBusStopLayer,
   useMapLayersController,
   useMetroLayer,
@@ -20,6 +22,7 @@ const INITIAL_VIEW_STATE: MapViewState = {
 export function HomePage() {
   const { data: busStops } = useBusStops();
   const { data: metro } = useMetroStations();
+  const { data: districts } = useDistricts();
   const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
 
   const busStopLayer = useBusStopLayer({
@@ -34,7 +37,11 @@ export function HomePage() {
     viewState,
   });
 
-  const map = useMapLayersController([busStopLayer, metroLayer]);
+  const map = useMapLayersController([
+    createDistrictLayer({ data: districts?.data || [] }),
+    busStopLayer,
+    metroLayer,
+  ]);
 
   return (
     <div
