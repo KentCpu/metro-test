@@ -26,6 +26,7 @@
     "react-map-gl": "^8.1.1",
     "react-router": "^7.17.0",
     "supercluster": "^8.0.1",
+    "use-supercluster": "^1.2.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
