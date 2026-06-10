@@ -1,13 +1,14 @@
 import type { BusStop } from "@entities/busStop";
-import { Stack, Text, Title } from "@shared/ui";
+import { MapCard, Text, Title } from "@shared/ui";
 
 interface Props {
   data: BusStop;
+  onClose: () => void;
 }
 
-export function BusStopCard({ data }: Props) {
+export function BusStopCard({ data, onClose }: Props) {
   return (
-    <Stack gap="xs" maw={280}>
+    <MapCard onClose={onClose}>
       <Title order={4}>{data.name}</Title>
       {data.address && (
         <Text size="sm" c="dimmed">
@@ -21,6 +22,6 @@ export function BusStopCard({ data }: Props) {
         </Text>
         {data.routes.join(", ")}
       </Text>
-    </Stack>
+    </MapCard>
   );
 }

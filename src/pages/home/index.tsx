@@ -14,7 +14,7 @@ export function HomePage() {
   return (
     <div
       style={{
-        width: "100vw",
+        width: "50vw",
         height: "100vh",
         position: "relative",
         flex: "auto",

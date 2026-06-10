@@ -5,9 +5,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { memo, type Ref } from "react";
 import ReactMap from "react-map-gl/maplibre";
 import styles from "./index.module.css";
-import { CloseButton, FloatingWindow } from "@mantine/core";
 import { getCursor } from "./getCursor";
-import { useDisclosure } from "@mantine/hooks";
 
 const INITIAL_VIEW_STATE: MapViewState = {
   longitude: 37.6176,
@@ -29,7 +27,7 @@ interface Props extends Omit<DeckProps, "height" | "width"> {
 
 export const MapGL = memo(function MapGL(props: Props) {
   return (
-    <div className={styles["map-container"]}>
+    <div className={styles["map-container"]} style={{ position: "relative" }}>
       <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={CONTROLS}
@@ -41,30 +39,7 @@ export const MapGL = memo(function MapGL(props: Props) {
           mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         />
       </DeckGL>
-      <CardInfo>{props.cardInfo}</CardInfo>
+      {props.cardInfo}
     </div>
   );
 });
-
-function CardInfo({ children }: { children: React.ReactNode | null }) {
-  const [visible, handlers] = useDisclosure(true);
-
-  if (!visible || !children) {
-    return null;
-  }
-
-  return (
-    <FloatingWindow
-      p="sm"
-      w={280}
-      withBorder
-      pos="absolute"
-      constrainToViewport
-      constrainOffset={20}
-      initialPosition={{ top: 50, right: 20 }}
-    >
-      <CloseButton onClick={handlers.close} />
-      {children}
-    </FloatingWindow>
-  );
-}

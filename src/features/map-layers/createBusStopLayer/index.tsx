@@ -10,7 +10,7 @@ const BUS_STOP_LAYER_ID = "BUS_STOP_LAYER_ID";
 export function createBusStopLayer({
   data,
   visible = true,
-  renderCard = (data) => <BusStopCard data={data} />,
+  // renderCard = (data) => <BusStopCard data={data} />,
 }: LayerCreatorParams<BusStop>): LayerCreator<BusStop> {
   return ({ onSelect }) => {
     const handleClick = (pickInfo: PickingInfo<BusStop>) => {
@@ -45,7 +45,9 @@ export function createBusStopLayer({
         getSize: 40,
         pickable: true,
       }),
-      renderCard,
+      renderCard: (data) => (
+        <BusStopCard data={data} onClose={() => onSelect(null)} />
+      ),
     };
   };
 }

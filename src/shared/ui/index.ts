@@ -6,3 +6,4 @@ export { Stack } from "./Stack";
 export { Text } from "./Text";
 export { TextInput } from "./TextInput";
 export { Title } from "./Title";
+export { MapCard } from "./MapGL/MapCard";
