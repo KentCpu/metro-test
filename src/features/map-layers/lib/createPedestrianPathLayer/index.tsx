@@ -1,0 +1,71 @@
+import type { PickingInfo } from "@deck.gl/core";
+import { GeoJsonLayer } from "@deck.gl/layers";
+import type { PedestrianPath } from "@entities/pedestrianPath";
+import type { LayerCreator } from "../../types";
+import { PedestrianPathCard } from "./PedestrianPathCard";
+
+const PEDESTRIAN_PATH_LAYER_ID = "pedestrian-path-layer";
+
+type PedestrianPathLayerCreatorParams = {
+  data: PedestrianPath[];
+};
+
+type PedestrianPathFeature = GeoJSON.Feature<
+  GeoJSON.LineString,
+  PedestrianPath
+>;
+
+function pathsToGeoJson(paths: PedestrianPath[]): GeoJSON.FeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: paths.map((path) => ({
+      type: "Feature",
+      properties: path,
+      geometry: {
+        type: "LineString",
+        coordinates: path.coordinates,
+      },
+    })),
+  };
+}
+
+export function createPedestrianPathLayer({
+  data,
+}: PedestrianPathLayerCreatorParams): LayerCreator<PedestrianPath> {
+  const geojson = pathsToGeoJson(data);
+
+  return ({ onSelect }) => {
+    const handleClick = (pickInfo: PickingInfo<PedestrianPathFeature>) => {
+      const path = pickInfo.object?.properties;
+
+      if (!path) {
+        return;
+      }
+
+      onSelect({
+        layerId: PEDESTRIAN_PATH_LAYER_ID,
+        data: path,
+      });
+    };
+
+    return {
+      id: PEDESTRIAN_PATH_LAYER_ID,
+      visible: data.length > 0,
+      layer: new GeoJsonLayer({
+        id: PEDESTRIAN_PATH_LAYER_ID,
+        data: geojson,
+        filled: false,
+        stroked: true,
+        getLineColor: (feature) =>
+          (feature.properties as PedestrianPath).lineColor,
+        getLineWidth: 4,
+        lineWidthMinPixels: 2,
+        pickable: true,
+        onClick: handleClick,
+      }),
+      renderCard: (item) => (
+        <PedestrianPathCard data={item} onClose={() => onSelect(null)} />
+      ),
+    };
+  };
+}

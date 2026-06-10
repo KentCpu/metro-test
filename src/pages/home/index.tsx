@@ -1,8 +1,10 @@
 import { useBusStops } from "@entities/busStop";
 import { useDistricts } from "@entities/district";
 import { useMetroStations } from "@entities/metroStation";
+import { usePedestrianPaths } from "@entities/pedestrianPath";
 import {
   createDistrictLayer,
+  createPedestrianPathLayer,
   useBusStopLayer,
   useMapLayersController,
   useMetroLayer,
@@ -23,6 +25,7 @@ export function HomePage() {
   const { data: busStops } = useBusStops();
   const { data: metro } = useMetroStations();
   const { data: districts } = useDistricts();
+  const { data: pedestrianPaths } = usePedestrianPaths();
   const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
 
   const busStopLayer = useBusStopLayer({
@@ -39,6 +42,7 @@ export function HomePage() {
 
   const map = useMapLayersController([
     createDistrictLayer({ data: districts ?? [] }),
+    createPedestrianPathLayer({ data: pedestrianPaths ?? [] }),
     busStopLayer,
     metroLayer,
   ]);
