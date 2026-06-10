@@ -1,4 +1,4 @@
-import { Button, Center, Stack, Text, Title } from "@shared/ui";
+import { Button, Center, Stack, Text, Title } from "@mantine/core";
 import { Routes } from "@shared/constants";
 import { Link } from "react-router";
 

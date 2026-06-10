@@ -9,13 +9,11 @@ import type {
 
 const DEFAULT_CLUSTER_RADIUS = 40;
 const DEFAULT_MAX_ZOOM = 16;
-const DEFAULT_BOUNDS: [number, number, number, number] = [
-  -180, -85, 180, 85,
-];
+const DEFAULT_BOUNDS: [number, number, number, number] = [-180, -85, 180, 85];
 
 export function useClusteredPoints<T>(
   points: MapPointFeature<T>[],
-  clustering: ClusteringParams = {},
+  clustering: ClusteringParams = {}
 ): MapPointFeature<T>[] {
   const clusteringEnabled = isClusteringEnabled(clustering);
 
@@ -39,9 +37,7 @@ export function useClusteredPoints<T>(
   const { clusters } = useSupercluster({
     points,
     bounds,
-    zoom: clusteringEnabled
-      ? Math.floor(clustering.viewState.zoom)
-      : 0,
+    zoom: clusteringEnabled ? Math.floor(clustering.viewState.zoom) : 0,
     options,
     disableRefresh: !clusteringEnabled,
   });
