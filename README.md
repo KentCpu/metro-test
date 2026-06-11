@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# Интерактивная карта Москвы
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение с картой на базе MapLibre и deck.gl. Отображает административные округа, остановки, станции метро и пешеходные маршруты. Поддерживает переключение слоёв, клик по объектам с карточкой информации и добавление новых остановок.
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Категория | Технологии |
+|-----------|------------|
+| Язык | TypeScript |
+| UI | React 19, Mantine 9 |
+| Сборка | Vite 8, React Compiler |
+| Карта | deck.gl, MapLibre GL, react-map-gl |
+| Данные | TanStack Query, Axios |
+| Формы | React Hook Form, Zod |
+| Маршрутизация | React Router 7 |
+| Мок API (dev) | MSW 2 |
+| Линтинг / форматирование | ESLint, Biome |
 
-## React Compiler
+## Архитектура
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Проект организован по методологии Feature-Sliced Design:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  app/       — точка входа, роутинг, MSW
+  pages/     — страницы
+  widgets/   — крупные UI-блоки
+  features/  — пользовательские сценарии (слои карты, создание остановки)
+  entities/  — бизнес-сущности (округа, остановки, метро, маршруты)
+  shared/    — переиспользуемый UI, API-клиент, константы
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Алиасы путей: `@app`, `@pages`, `@widgets`, `@features`, `@entities`, `@shared`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Требования
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 20+
+- pnpm (рекомендуется) или npm
+
+## Развёртывание для разработки
+
+```bash
+# Установка зависимостей
+pnpm install
+
+pnpm build && pnpm preview
+# Запуск dev-сервера (http://localhost:5173)
+pnpm dev
 ```
+
+В режиме разработки API эмулируется через [MSW](https://mswjs.io/): запросы к `/api/*` перехватываются и отдают мок-данные. Реальный бэкенд не нужен.
+
+## Сборка и запуск
+
+```bash
+# Проверка типов
+pnpm typecheck
+
+# Линт
+pnpm lint
+
+# Форматирование
+pnpm format
+
+# Сборка (результат в dist/)
+pnpm build
+
+# Запуск собранного приложения
+pnpm preview
+```
+
+После `pnpm build` приложение нужно запускать через `pnpm preview` — dev-сервер (`pnpm dev`) для просмотра сборки не подходит.
+
+> **Важно:** MSW работает только в `development`. В `preview` и продакшене нужен реальный API с теми же эндпоинтами (`/api/bus-stop`, `/api/district`, `/api/metro`, `/api/pedestrian-path`) или проксирование на бэкенд.
+
+## Скрипты
+
+| Команда | Описание |
+|---------|----------|
+| `pnpm dev` | Dev-сервер с HMR |
+| `pnpm build` | TypeScript + Vite сборка |
+| `pnpm preview` | Просмотр `dist/` локально |
+| `pnpm typecheck` | Проверка типов без сборки |
+| `pnpm lint` | ESLint |
+| `pnpm format` | Biome format |
+
+## Карта и слои
+
+- **Административные округа** — полигоны с заливкой, клик открывает карточку
+- **Остановки** — иконки с кластеризацией
+- **Станции метро** — иконки с кластеризацией
+- **Пешеходные маршруты** — линии на карте
+
+Видимость слоёв управляется через меню «Слои» на главной странице.
+
+## Базовая карта
+
+Стиль подложки: [Carto Positron](https://basemaps.cartocdn.com/gl/positron-gl-style/style.json) (подгружается по CDN, интернет обязателен).
