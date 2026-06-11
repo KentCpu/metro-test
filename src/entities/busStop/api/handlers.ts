@@ -1,4 +1,5 @@
 import { delay, http, HttpResponse } from "msw";
+import { API_PREFIX } from "@shared/constants";
 import { MOSCOW_BUS_STOPS } from "./mocks";
 import type { BusStop } from "./types";
 
@@ -17,12 +18,12 @@ function getBusStops(): BusStop[] {
 }
 
 export const busStopHandlers = [
-  http.get("/api/bus-stop", async () => {
+  http.get(`${API_PREFIX}/bus-stop`, async () => {
     await delay(300);
     return HttpResponse.json(getBusStops());
   }),
 
-  http.post("/api/bus-stop", async ({ request }) => {
+  http.post(`${API_PREFIX}/bus-stop`, async ({ request }) => {
     const body = (await request.json()) as BusStop;
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...getSaved(), body]));
     await delay(300);

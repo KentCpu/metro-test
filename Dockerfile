@@ -8,7 +8,9 @@ RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
 ARG VITE_BASE_PATH=/
+ARG VITE_ENABLE_MSW=false
 ENV VITE_BASE_PATH=$VITE_BASE_PATH
+ENV VITE_ENABLE_MSW=$VITE_ENABLE_MSW
 COPY . .
 RUN pnpm build
 

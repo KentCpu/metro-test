@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VITE_BASE_PATH: /${{ github.event.repository.name }}/
+      VITE_ENABLE_MSW: "true"
     steps:
       - uses: actions/checkout@v4
 
@@ -26,6 +27,7 @@ jobs:
         run: |
           docker build \
             --build-arg VITE_BASE_PATH="$VITE_BASE_PATH" \
+            --build-arg VITE_ENABLE_MSW="$VITE_ENABLE_MSW" \
             --target export \
             --output dist \
             .

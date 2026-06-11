@@ -1,6 +1,7 @@
 import axios, { type AxiosRequestConfig } from "axios";
+import { API_PREFIX } from "@shared/constants";
 
-const SERVER_API_PATH = "/api";
+const SERVER_API_PATH = API_PREFIX;
 
 const axiosInstance = axios.create({
   baseURL: SERVER_API_PATH,
