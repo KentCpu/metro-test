@@ -56,7 +56,7 @@ export function HomePage() {
 
   return (
     <Page>
-      <Flex direction="column" flex={1} gap="sm" mih={0} w="100%">
+      <Flex direction="column" flex={1} gap="sm" w="100%">
         <Flex gap="sm">
           <CreateBusStop />
           <MapLayersMenu

@@ -1,7 +1,7 @@
 import type { BusStop } from "@entities/busStop";
 import { createClusteredIconPointLayer } from "../createClusteredIconPointLayer";
 import { BusStopCard } from "../../ui/BusStopCard";
-import busStopAtlas from "./bus-stop-icon.png";
+import busStopAtlas from "./bus-icon-atlas.png";
 
 const BUS_STOP_LAYER_ID = "bus-stop-layer";
 
@@ -13,10 +13,10 @@ const ICON_MAPPING = {
     height: 64,
   },
   cluster: {
-    x: 0,
+    x: 64,
     y: 0,
-    width: 32,
-    height: 32,
+    width: 64,
+    height: 64,
   },
 } as const;
 
