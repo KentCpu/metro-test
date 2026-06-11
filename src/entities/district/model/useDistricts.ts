@@ -6,5 +6,7 @@ export function useDistricts() {
   return useQuery<District[]>({
     queryKey: ["districts"],
     queryFn: ({ signal }) => server.get<District[]>("/district", { signal }),
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 }

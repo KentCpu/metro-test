@@ -61,7 +61,6 @@ export function createPedestrianPathLayer({
   };
 }
 
-
 function pathsToGeoJson(paths: PedestrianPath[]): GeoJSON.FeatureCollection {
   return {
     type: "FeatureCollection",

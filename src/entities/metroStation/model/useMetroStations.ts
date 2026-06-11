@@ -7,5 +7,7 @@ export function useMetroStations() {
     queryKey: ["metro-stations"],
     queryFn: ({ signal }) =>
       server.get<MetroStation[]>("/metro-station", { signal }),
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 }

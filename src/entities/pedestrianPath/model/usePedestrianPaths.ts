@@ -7,5 +7,7 @@ export function usePedestrianPaths() {
     queryKey: ["pedestrian-paths"],
     queryFn: ({ signal }) =>
       server.get<PedestrianPath[]>("/pedestrian-path", { signal }),
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 }
