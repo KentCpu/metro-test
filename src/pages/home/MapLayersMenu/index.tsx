@@ -3,7 +3,7 @@ import { Button } from "@shared/ui";
 import { MAP_LAYERS, type MapLayerId } from "./mapLayers";
 
 interface Props {
-  layerVisibility: Record<MapLayerId, boolean>;
+  layerVisibility: Set<MapLayerId>;
   onChangeLayerVisible: (layerId: MapLayerId, checked: boolean) => void;
 }
 
@@ -20,7 +20,7 @@ export function MapLayersMenu({
         <Menu.Label>Видимость слоёв</Menu.Label>
         {MAP_LAYERS.map((layer) => (
           <Menu.CheckboxItem
-            checked={layerVisibility[layer.id]}
+            checked={layerVisibility.has(layer.id)}
             key={layer.id}
             onChange={(checked) => onChangeLayerVisible(layer.id, checked)}
           >

@@ -36,21 +36,21 @@ export function HomePage() {
   const map = useMapLayersController([
     createDistrictLayer({
       data: districts,
-      visible: layerVisibility["district-layer"],
+      visible: layerVisibility.has("district-layer"),
     }),
     createBusStopLayer({
       data: busStops,
       enableClustering: true,
-      visible: layerVisibility["bus-stop-layer"],
+      visible: layerVisibility.has("bus-stop-layer"),
     }),
     createMetroLayer({
       data: metro,
       enableClustering: true,
-      visible: layerVisibility["metro-layer"],
+      visible: layerVisibility.has("metro-layer"),
     }),
     createPedestrianPathLayer({
       data: pedestrianPaths ?? [],
-      visible: layerVisibility["pedestrian-path-layer"],
+      visible: layerVisibility.has("pedestrian-path-layer"),
     }),
   ]);
 

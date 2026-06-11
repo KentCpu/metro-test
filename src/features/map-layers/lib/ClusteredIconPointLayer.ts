@@ -212,7 +212,7 @@ export class ClusteredIconPointLayer<
           getIcon: () => clusterIconId,
           getPosition: (feature: ClusterMapFeature) =>
             feature.geometry.coordinates as [number, number],
-          getSize: clusterSize,
+          sizeScale: clusterSize,
           onClick: handleClick,
         })
       ),
@@ -227,7 +227,7 @@ export class ClusteredIconPointLayer<
           getIcon: () => pointIconId,
           getPosition: (feature: MapPointFeature<T>) =>
             feature.geometry.coordinates as [number, number],
-          getSize: pointSize,
+          sizeScale: pointSize,
           onClick: handleClick,
         })
       ),

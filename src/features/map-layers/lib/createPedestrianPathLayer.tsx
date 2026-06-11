@@ -3,7 +3,6 @@ import { GeoJsonLayer } from "@deck.gl/layers";
 import type { PedestrianPath } from "@entities/pedestrianPath";
 import type { LayerCreator } from "../types";
 import { PedestrianPathCard } from "../ui/PedestrianPathCard";
-import type { Feature } from "maplibre-gl";
 
 const PEDESTRIAN_PATH_LAYER_ID = "pedestrian-path-layer";
 
