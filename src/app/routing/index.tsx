@@ -5,21 +5,26 @@ import { NotFoundPage } from "@pages/notFound";
 import { Layout } from "./Layout";
 import { Routes } from "@shared/constants";
 
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: Routes.Home,
-        element: <HomePage />,
-      },
-      {
-        path: Routes.NotFound,
-        element: <NotFoundPage />,
-      },
-    ],
-  },
-]);
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const router = createBrowserRouter(
+  [
+    {
+      element: <Layout />,
+      children: [
+        {
+          path: Routes.Home,
+          element: <HomePage />,
+        },
+        {
+          path: Routes.NotFound,
+          element: <NotFoundPage />,
+        },
+      ],
+    },
+  ],
+  { basename: basename || undefined },
+);
 
 export function Router() {
   return <RouterProvider router={router} />;
