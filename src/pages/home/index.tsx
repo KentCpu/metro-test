@@ -2,19 +2,19 @@ import { useBusStops } from "@entities/busStop";
 import { useDistricts } from "@entities/district";
 import { useMetroStations } from "@entities/metroStation";
 import { usePedestrianPaths } from "@entities/pedestrianPath";
-import { CreateBusStop } from "@features/create-bus-stop";
+import { CreateBusStop } from "@features/createBusStop";
 import {
   createDistrictLayer,
   createPedestrianPathLayer,
   useMapLayersController,
-} from "@features/map-layers";
+} from "@features/mapLayers";
 import { Flex, MapGL } from "@shared/ui";
 import { Page } from "@widgets/page";
 import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
 import { MapLayersMenu } from "./MapLayersMenu";
-import { createMetroLayer } from "@features/map-layers/lib/createMetroLayer";
-import { createBusStopLayer } from "@features/map-layers/lib/createBusStopLayer";
+import { createMetroLayer } from "@features/mapLayers";
+import { createBusStopLayer } from "@features/mapLayers";
 
 const MOSCOW_VIEW_STATE: MapViewState = {
   longitude: 37.6176,

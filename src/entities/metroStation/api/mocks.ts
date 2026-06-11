@@ -24,7 +24,7 @@ export const MOSCOW_METRO_STATIONS: MetroStation[] = [
     name: "Чистые пруды",
     kind: "metro",
     lines: ["Сокольническая", "Калужско-Рижская"],
-    coordinates: [37.6200, 55.7649],
+    coordinates: [37.62, 55.7649],
     address: "Чистопрудный бульвар",
     description: "Станция у Чистопрудного бульвара",
   },

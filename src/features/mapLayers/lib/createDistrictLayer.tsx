@@ -18,7 +18,7 @@ export function createDistrictLayer({
   return ({ onSelect, getVisible }) => {
     const geojson = districtsToGeoJson(data || []);
     const visible = getVisible(DISTRICT_LAYER_ID);
-    
+
     const handleClick = (pickInfo: PickingInfo<DistrictFeature>) => {
       const district = pickInfo.object?.properties;
       if (!district) {
