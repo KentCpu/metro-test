@@ -1,20 +1,20 @@
+import type { MapViewState } from "@deck.gl/core";
 import { useBusStops } from "@entities/busStop";
 import { useDistricts } from "@entities/district";
 import { useMetroStations } from "@entities/metroStation";
 import { usePedestrianPaths } from "@entities/pedestrianPath";
 import { CreateBusStop } from "@features/createBusStop";
 import {
+  createBusStopLayer,
   createDistrictLayer,
+  createMetroLayer,
   createPedestrianPathLayer,
   useMapLayersController,
 } from "@features/mapLayers";
 import { Flex, MapGL } from "@shared/ui";
 import { Page } from "@widgets/page";
-import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
 import { MapLayersMenu } from "./MapLayersMenu";
-import { createMetroLayer } from "@features/mapLayers";
-import { createBusStopLayer } from "@features/mapLayers";
 
 const MOSCOW_VIEW_STATE: MapViewState = {
   longitude: 37.6176,
@@ -36,6 +36,9 @@ export function HomePage() {
       createDistrictLayer({
         data: districts,
       }),
+      createPedestrianPathLayer({
+        data: pedestrianPaths,
+      }),
       createBusStopLayer({
         data: busStops,
         enableClustering: true,
@@ -43,9 +46,6 @@ export function HomePage() {
       createMetroLayer({
         data: metro,
         enableClustering: true,
-      }),
-      createPedestrianPathLayer({
-        data: pedestrianPaths,
       }),
     ]);
 
