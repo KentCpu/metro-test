@@ -22,6 +22,7 @@ const ICON_MAPPING = {
 
 export const createBusStopLayer = createClusteredIconPointLayer<BusStop>({
   layerId: BUS_STOP_LAYER_ID,
+  label: "Остановки",
   iconAtlas: busStopAtlas,
   iconMapping: ICON_MAPPING,
   pointIconId: "bus-stop",

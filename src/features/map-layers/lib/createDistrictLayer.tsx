@@ -8,18 +8,17 @@ const DISTRICT_LAYER_ID = "district-layer";
 
 type DistrictLayerCreatorParams = {
   data: District[] | undefined | null;
-  visible?: boolean;
 };
 
 type DistrictFeature = GeoJSON.Feature<GeoJSON.Polygon, District>;
 
 export function createDistrictLayer({
   data,
-  visible = true,
 }: DistrictLayerCreatorParams): LayerCreator<District> {
   const geojson = districtsToGeoJson(data || []);
 
-  return ({ onSelect }) => {
+  return ({ onSelect, getVisible }) => {
+    const visible = getVisible(DISTRICT_LAYER_ID);
     const handleClick = (pickInfo: PickingInfo<DistrictFeature>) => {
       const district = pickInfo.object?.properties;
       if (!district) {
@@ -34,6 +33,7 @@ export function createDistrictLayer({
 
     return {
       id: DISTRICT_LAYER_ID,
+      label: "Административные округа",
       layers: [
         new GeoJsonLayer({
           id: DISTRICT_LAYER_ID,

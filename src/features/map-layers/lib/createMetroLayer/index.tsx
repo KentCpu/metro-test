@@ -22,6 +22,7 @@ const ICON_MAPPING = {
 
 export const createMetroLayer = createClusteredIconPointLayer<MetroStation>({
   layerId: METRO_LAYER_ID,
+  label: "Станции метро",
   iconAtlas: metroIconAtlas,
   iconMapping: ICON_MAPPING,
   pointIconId: "metro-station",

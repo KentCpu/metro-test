@@ -29,18 +29,18 @@ export type ClusterMapFeature = GeoJSON.Feature<
 
 export type LayerData<TData> = {
   id: string;
+  label: string;
   layers: Layer[];
-  visible?: boolean;
   renderCard?: (item: TData) => React.ReactNode;
   renderListCard?: (items: TData[]) => React.ReactNode;
 };
 
 export type LayerCreator<TData> = (params: {
   onSelect(params: SelectedLayerData<TData> | null): void;
+  getVisible: (layerId: string) => boolean;
 }) => LayerData<TData>;
 
 export type LayerCreatorParams<TData> = {
   data: readonly TData[] | null | undefined;
-  visible?: boolean;
   enableClustering?: boolean;
 };

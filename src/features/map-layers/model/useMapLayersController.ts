@@ -5,12 +5,16 @@ export function useMapLayersController(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   layerCreators: readonly LayerCreator<any>[]
 ) {
+  const [hiddenLayers, setHiddenLayers] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<SelectedLayerData<unknown> | null>(
     null
   );
 
   const layersData = layerCreators.map((layerCreator) =>
-    layerCreator({ onSelect: setSelected })
+    layerCreator({
+      onSelect: setSelected,
+      getVisible: (layerId) => !hiddenLayers.has(layerId),
+    })
   );
 
   const currentLayer = selected
@@ -22,7 +26,29 @@ export function useMapLayersController(
       ? renderSelectedCard(selected, currentLayer)
       : undefined;
 
-  return { layers: layersData.map((layerData) => layerData.layers), cardInfo };
+  const handleChangeHiddenLayer = (id: string) => {
+    setHiddenLayers((current) => {
+      const next = new Set(current);
+      if (current.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+
+      return next;
+    });
+  };
+
+  return {
+    hiddenLayers,
+    handleChangeHiddenLayer,
+    layers: layersData.map((layerData) => layerData.layers),
+    layersInfo: layersData.map((layer) => ({
+      id: layer.id,
+      label: layer.label,
+    })),
+    cardInfo,
+  };
 }
 
 function renderSelectedCard(

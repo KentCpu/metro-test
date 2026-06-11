@@ -11,6 +11,7 @@ export type ClusteredIconPointLayerConfig<
   T extends { id: string; name: string },
 > = {
   layerId: string;
+  label: string;
   iconAtlas: string;
   iconMapping: IconMapping;
   pointIconId: string;
@@ -29,16 +30,18 @@ export function createClusteredIconPointLayer<
 >(config: ClusteredIconPointLayerConfig<T>) {
   return function clusteredIconPointLayer({
     data,
-    visible = true,
     enableClustering = false,
   }: LayerCreatorParams<T>): LayerCreator<T> {
-    return ({ onSelect }) => ({
+    return ({ onSelect, getVisible }) => ({
       id: config.layerId,
+      label: config.label,
       layers: [
         new ClusteredIconPointLayer<T>({
           id: config.layerId,
           data: data ?? [],
-          visible: Boolean(visible && data && data.length > 0),
+          visible: Boolean(
+            getVisible(config.layerId) && data && data.length > 0
+          ),
           enableClustering,
           pickable: true,
           ...(config.clusterRadius != null && {

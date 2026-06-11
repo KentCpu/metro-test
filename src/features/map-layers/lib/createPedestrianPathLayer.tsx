@@ -8,7 +8,6 @@ const PEDESTRIAN_PATH_LAYER_ID = "pedestrian-path-layer";
 
 type PedestrianPathLayerCreatorParams = {
   data: PedestrianPath[] | null | undefined;
-  visible?: boolean;
 };
 
 type PedestrianPathFeature = GeoJSON.Feature<
@@ -18,14 +17,13 @@ type PedestrianPathFeature = GeoJSON.Feature<
 
 export function createPedestrianPathLayer({
   data,
-  visible = true,
 }: PedestrianPathLayerCreatorParams): LayerCreator<PedestrianPath> {
   const geojson = pathsToGeoJson(data ?? []);
 
-  return ({ onSelect }) => {
+  return ({ onSelect, getVisible }) => {
+    const visible = getVisible(PEDESTRIAN_PATH_LAYER_ID);
     const handleClick = (pickInfo: PickingInfo<PedestrianPathFeature>) => {
       const path = pickInfo.object?.properties;
-
       if (!path) {
         return;
       }
@@ -38,6 +36,7 @@ export function createPedestrianPathLayer({
 
     return {
       id: PEDESTRIAN_PATH_LAYER_ID,
+      label: "Пешеходные дорожки",
       layers: [
         new GeoJsonLayer({
           id: PEDESTRIAN_PATH_LAYER_ID,

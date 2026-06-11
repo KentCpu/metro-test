@@ -13,7 +13,6 @@ import { Page } from "@widgets/page";
 import type { MapViewState } from "@deck.gl/core";
 import { useState } from "react";
 import { MapLayersMenu } from "./MapLayersMenu";
-import { useLayerVisibility } from "./MapLayersMenu/useLayerVisibility";
 import { createMetroLayer } from "@features/map-layers/lib/createMetroLayer";
 import { createBusStopLayer } from "@features/map-layers/lib/createBusStopLayer";
 
@@ -31,28 +30,24 @@ export function HomePage() {
   const { data: districts } = useDistricts();
   const { data: pedestrianPaths } = usePedestrianPaths();
   const [viewState, setViewState] = useState<MapViewState>(MOSCOW_VIEW_STATE);
-  const [layerVisibility, setLayerVisibility] = useLayerVisibility();
 
-  const map = useMapLayersController([
-    createDistrictLayer({
-      data: districts,
-      visible: layerVisibility.has("district-layer"),
-    }),
-    createBusStopLayer({
-      data: busStops,
-      enableClustering: true,
-      visible: layerVisibility.has("bus-stop-layer"),
-    }),
-    createMetroLayer({
-      data: metro,
-      enableClustering: true,
-      visible: layerVisibility.has("metro-layer"),
-    }),
-    createPedestrianPathLayer({
-      data: pedestrianPaths ?? [],
-      visible: layerVisibility.has("pedestrian-path-layer"),
-    }),
-  ]);
+  const { layers, hiddenLayers, layersInfo, handleChangeHiddenLayer } =
+    useMapLayersController([
+      createDistrictLayer({
+        data: districts,
+      }),
+      createBusStopLayer({
+        data: busStops,
+        enableClustering: true,
+      }),
+      createMetroLayer({
+        data: metro,
+        enableClustering: true,
+      }),
+      createPedestrianPathLayer({
+        data: pedestrianPaths,
+      }),
+    ]);
 
   return (
     <Page>
@@ -60,12 +55,13 @@ export function HomePage() {
         <Flex gap="sm">
           <CreateBusStop />
           <MapLayersMenu
-            layerVisibility={layerVisibility}
-            onChangeLayerVisible={setLayerVisibility}
+            options={layersInfo}
+            hiddenLayers={hiddenLayers}
+            onChangeLayerVisible={handleChangeHiddenLayer}
           />
         </Flex>
         <MapGL
-          {...map}
+          layers={layers}
           viewState={viewState}
           onViewStateChange={({ viewState }) => setViewState(viewState)}
         />

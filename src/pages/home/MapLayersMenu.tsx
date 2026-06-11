@@ -1,14 +1,20 @@
 import { Menu } from "@mantine/core";
 import { Button } from "@shared/ui";
-import { MAP_LAYERS, type MapLayerId } from "./mapLayers";
+
+interface Options {
+  id: string;
+  label: string;
+}
 
 interface Props {
-  layerVisibility: Set<MapLayerId>;
-  onChangeLayerVisible: (layerId: MapLayerId, checked: boolean) => void;
+  options: Options[];
+  hiddenLayers: Set<string>;
+  onChangeLayerVisible: (layerId: string) => void;
 }
 
 export function MapLayersMenu({
-  layerVisibility,
+  options,
+  hiddenLayers,
   onChangeLayerVisible,
 }: Props) {
   return (
@@ -18,13 +24,13 @@ export function MapLayersMenu({
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Видимость слоёв</Menu.Label>
-        {MAP_LAYERS.map((layer) => (
+        {options.map((option) => (
           <Menu.CheckboxItem
-            checked={layerVisibility.has(layer.id)}
-            key={layer.id}
-            onChange={(checked) => onChangeLayerVisible(layer.id, checked)}
+            checked={!hiddenLayers.has(option.id)}
+            key={option.id}
+            onChange={() => onChangeLayerVisible(option.id)}
           >
-            {layer.label}
+            {option.label}
           </Menu.CheckboxItem>
         ))}
       </Menu.Dropdown>
