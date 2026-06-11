@@ -17,7 +17,7 @@ import { useLayerVisibility } from "./MapLayersMenu/useLayerVisibility";
 import { createMetroLayer } from "@features/map-layers/lib/createMetroLayer";
 import { createBusStopLayer } from "@features/map-layers/lib/createBusStopLayer";
 
-const INITIAL_VIEW_STATE: MapViewState = {
+const MOSCOW_VIEW_STATE: MapViewState = {
   longitude: 37.6176,
   latitude: 55.7558,
   zoom: 11,
@@ -30,21 +30,21 @@ export function HomePage() {
   const { data: metro } = useMetroStations();
   const { data: districts } = useDistricts();
   const { data: pedestrianPaths } = usePedestrianPaths();
-  const [viewState, setViewState] = useState<MapViewState>(INITIAL_VIEW_STATE);
+  const [viewState, setViewState] = useState<MapViewState>(MOSCOW_VIEW_STATE);
   const [layerVisibility, setLayerVisibility] = useLayerVisibility();
 
   const map = useMapLayersController([
     createDistrictLayer({
-      data: districts ?? [],
+      data: districts,
       visible: layerVisibility["district-layer"],
     }),
     createBusStopLayer({
-      data: busStops || [],
+      data: busStops,
       enableClustering: true,
       visible: layerVisibility["bus-stop-layer"],
     }),
     createMetroLayer({
-      data: metro || [],
+      data: metro,
       enableClustering: true,
       visible: layerVisibility["metro-layer"],
     }),

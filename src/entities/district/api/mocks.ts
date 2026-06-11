@@ -1,9 +1,5 @@
 import type { District } from "./types";
 
-/**
- * Упрощённые полигоны административных районов ЦАО Москвы.
- * Координаты приближены к реальным границам.
- */
 export const MOSCOW_DISTRICTS: District[] = [
   {
     id: "district-001",

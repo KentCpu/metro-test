@@ -37,8 +37,8 @@ export function createClusteredIconPointLayer<
       layers: [
         new ClusteredIconPointLayer<T>({
           id: config.layerId,
-          data,
-          visible: visible && data.length > 0,
+          data: data ?? [],
+          visible: Boolean(visible && data && data.length > 0),
           enableClustering,
           pickable: true,
           ...(config.clusterRadius != null && {

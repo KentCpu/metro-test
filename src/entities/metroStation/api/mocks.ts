@@ -1,11 +1,6 @@
 import type { MetroStation } from "./types";
 
-/**
- * Реальные станции метро, МЦД и МЦК в центре Москвы.
- * Координаты — [долгота, широта].
- */
 export const MOSCOW_METRO_STATIONS: MetroStation[] = [
-  // Метро
   {
     id: "metro-001",
     name: "Тверская",
@@ -96,7 +91,6 @@ export const MOSCOW_METRO_STATIONS: MetroStation[] = [
     address: "Славянская пл.",
     description: "Крупный пересадочный узел",
   },
-  // МЦК
   {
     id: "mcc-001",
     name: "Площадь Гагарина",
@@ -124,7 +118,6 @@ export const MOSCOW_METRO_STATIONS: MetroStation[] = [
     address: "ул. Дубининская",
     description: "Станция МЦК на юго-востоке центра",
   },
-  // МЦД
   {
     id: "mcd-001",
     name: "Белорусская",

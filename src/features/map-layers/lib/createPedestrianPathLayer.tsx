@@ -7,7 +7,7 @@ import { PedestrianPathCard } from "../ui/PedestrianPathCard";
 const PEDESTRIAN_PATH_LAYER_ID = "pedestrian-path-layer";
 
 type PedestrianPathLayerCreatorParams = {
-  data: PedestrianPath[];
+  data: PedestrianPath[] | null | undefined;
   visible?: boolean;
 };
 
@@ -16,25 +16,11 @@ type PedestrianPathFeature = GeoJSON.Feature<
   PedestrianPath
 >;
 
-function pathsToGeoJson(paths: PedestrianPath[]): GeoJSON.FeatureCollection {
-  return {
-    type: "FeatureCollection",
-    features: paths.map((path) => ({
-      type: "Feature",
-      properties: path,
-      geometry: {
-        type: "LineString",
-        coordinates: path.coordinates,
-      },
-    })),
-  };
-}
-
 export function createPedestrianPathLayer({
   data,
   visible = true,
 }: PedestrianPathLayerCreatorParams): LayerCreator<PedestrianPath> {
-  const geojson = pathsToGeoJson(data);
+  const geojson = pathsToGeoJson(data ?? []);
 
   return ({ onSelect }) => {
     const handleClick = (pickInfo: PickingInfo<PedestrianPathFeature>) => {
@@ -56,7 +42,7 @@ export function createPedestrianPathLayer({
         new GeoJsonLayer({
           id: PEDESTRIAN_PATH_LAYER_ID,
           data: geojson,
-          visible: visible && data.length > 0,
+          visible: Boolean(visible && data && data.length > 0),
           filled: false,
           stroked: true,
           getLineColor: (feature) =>
@@ -71,5 +57,19 @@ export function createPedestrianPathLayer({
         <PedestrianPathCard data={item} onClose={() => onSelect(null)} />
       ),
     };
+  };
+}
+
+function pathsToGeoJson(paths: PedestrianPath[]): GeoJSON.FeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: paths.map((path) => ({
+      type: "Feature",
+      properties: path,
+      geometry: {
+        type: "LineString",
+        coordinates: path.coordinates,
+      },
+    })),
   };
 }

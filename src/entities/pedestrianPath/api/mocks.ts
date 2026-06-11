@@ -1,9 +1,5 @@
 import type { PedestrianPath } from "./types";
 
-/**
- * Пешеходные маршруты в центре Москвы.
- * Координаты по данным OpenStreetMap / открытых карт, порядок [долгота, широта].
- */
 export const MOSCOW_PEDESTRIAN_PATHS: PedestrianPath[] = [
   {
     id: "path-001",

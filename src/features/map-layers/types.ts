@@ -40,7 +40,7 @@ export type LayerCreator<TData> = (params: {
 }) => LayerData<TData>;
 
 export type LayerCreatorParams<TData> = {
-  data: readonly TData[];
+  data: readonly TData[] | null | undefined;
   visible?: boolean;
   enableClustering?: boolean;
 };

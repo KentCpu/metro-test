@@ -5,7 +5,6 @@ export interface MetroStation {
   name: string;
   kind: StationKind;
   lines: string[];
-  /** GeoJSON order: [longitude, latitude] */
   coordinates: [number, number];
   description?: string;
   address?: string;

@@ -7,31 +7,17 @@ import { DistrictCard } from "../ui/DistrictCard";
 const DISTRICT_LAYER_ID = "district-layer";
 
 type DistrictLayerCreatorParams = {
-  data: District[];
+  data: District[] | undefined | null;
   visible?: boolean;
 };
 
 type DistrictFeature = GeoJSON.Feature<GeoJSON.Polygon, District>;
 
-function districtsToGeoJson(districts: District[]): GeoJSON.FeatureCollection {
-  return {
-    type: "FeatureCollection",
-    features: districts.map((district) => ({
-      type: "Feature",
-      properties: district,
-      geometry: {
-        type: "Polygon",
-        coordinates: district.coordinates,
-      },
-    })),
-  };
-}
-
 export function createDistrictLayer({
   data,
   visible = true,
 }: DistrictLayerCreatorParams): LayerCreator<District> {
-  const geojson = districtsToGeoJson(data);
+  const geojson = districtsToGeoJson(data || []);
 
   return ({ onSelect }) => {
     const handleClick = (pickInfo: PickingInfo<DistrictFeature>) => {
@@ -52,7 +38,7 @@ export function createDistrictLayer({
         new GeoJsonLayer({
           id: DISTRICT_LAYER_ID,
           data: geojson,
-          visible: visible && data.length > 0,
+          visible: Boolean(visible && data && data.length > 0),
           filled: true,
           stroked: true,
           getFillColor: (feature) => (feature.properties as District).fillColor,
@@ -66,5 +52,19 @@ export function createDistrictLayer({
         <DistrictCard data={item} onClose={() => onSelect(null)} />
       ),
     };
+  };
+}
+
+function districtsToGeoJson(districts: District[]): GeoJSON.FeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: districts.map((district) => ({
+      type: "Feature",
+      properties: district,
+      geometry: {
+        type: "Polygon",
+        coordinates: district.coordinates,
+      },
+    })),
   };
 }
