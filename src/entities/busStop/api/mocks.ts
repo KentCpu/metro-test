@@ -3,15 +3,6 @@ import type { BusStop } from "./types";
 export const MOSCOW_BUS_STOPS: BusStop[] = [
   {
     id: "bus-001",
-    name: "Тверская улица",
-    address: "Тверская ул., д. 7",
-    coordinates: [37.6056, 55.7633],
-    routes: ["м1", "м12", "м21", "с592"],
-    description:
-      "Остановка на Тверской улице у пересечения с Камергерским переулком",
-  },
-  {
-    id: "bus-002",
     name: "Красная площадь",
     address: "Моховая ул., д. 6",
     coordinates: [37.6214, 55.7547],
@@ -19,7 +10,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка у исторического центра, рядом с Кремлём",
   },
   {
-    id: "bus-003",
+    id: "bus-002",
     name: "Манежная площадь",
     address: "Манежная пл.",
     coordinates: [37.6139, 55.7556],
@@ -27,7 +18,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка у Манежа, удобный доступ к Александровскому саду",
   },
   {
-    id: "bus-004",
+    id: "bus-003",
     name: "Арбат",
     address: "ул. Арбат, д. 1",
     coordinates: [37.5915, 55.7522],
@@ -35,7 +26,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка на Старом Арбате",
   },
   {
-    id: "bus-005",
+    id: "bus-004",
     name: "Смоленская площадь",
     address: "Смоленская пл.",
     coordinates: [37.582, 55.7483],
@@ -43,7 +34,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка у Смоленской площади, рядом с метро Смоленская",
   },
   {
-    id: "bus-006",
+    id: "bus-005",
     name: "Крымский Вал",
     address: "Крымский Вал, д. 2",
     coordinates: [37.6012, 55.7306],
@@ -51,23 +42,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка у входа в Парк Горького",
   },
   {
-    id: "bus-007",
-    name: "Парк Культуры",
-    address: "Зубовский бульвар, д. 4",
-    coordinates: [37.5938, 55.7354],
-    routes: ["м1", "м5", "м10", "м31"],
-    description: "Остановка у метро Парк культуры",
-  },
-  {
-    id: "bus-008",
-    name: "Курский вокзал",
-    address: "Земляной Вал, д. 29",
-    coordinates: [37.6595, 55.7575],
-    routes: ["м5", "м40", "м63", "н3"],
-    description: "Остановка у Курского вокзала",
-  },
-  {
-    id: "bus-009",
+    id: "bus-006",
     name: "Сретенский бульвар",
     address: "Сретенский бульвар",
     coordinates: [37.6328, 55.7661],
@@ -75,7 +50,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка на Сретенском бульваре",
   },
   {
-    id: "bus-010",
+    id: "bus-007",
     name: "Чистопрудный бульвар",
     address: "Чистопрудный бульвар, д. 12",
     coordinates: [37.6388, 55.7642],
@@ -83,15 +58,7 @@ export const MOSCOW_BUS_STOPS: BusStop[] = [
     description: "Остановка у Чистых прудов",
   },
   {
-    id: "bus-011",
-    name: "Площадь трёх вокзалов",
-    address: "Комсомольская пл.",
-    coordinates: [37.6523, 55.776],
-    routes: ["м1", "м7", "м13", "м14"],
-    description: "Остановка у крупного транспортного узла",
-  },
-  {
-    id: "bus-012",
+    id: "bus-008",
     name: "Белорусский вокзал",
     address: "пл. Тверская Застава, д. 7",
     coordinates: [37.5828, 55.7765],

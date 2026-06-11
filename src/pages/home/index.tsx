@@ -31,7 +31,7 @@ export function HomePage() {
   const { data: pedestrianPaths } = usePedestrianPaths();
   const [viewState, setViewState] = useState<MapViewState>(MOSCOW_VIEW_STATE);
 
-  const { layers, hiddenLayers, layersInfo, handleChangeHiddenLayer } =
+  const { hiddenLayers, layersInfo, handleChangeHiddenLayer, ...mapProps } =
     useMapLayersController([
       createDistrictLayer({
         data: districts,
@@ -61,7 +61,7 @@ export function HomePage() {
           />
         </Flex>
         <MapGL
-          layers={layers}
+          {...mapProps}
           viewState={viewState}
           onViewStateChange={({ viewState }) => setViewState(viewState)}
         />

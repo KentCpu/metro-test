@@ -29,6 +29,7 @@ export function useMapLayersController(
   const handleChangeHiddenLayer = (id: string) => {
     setHiddenLayers((current) => {
       const next = new Set(current);
+
       if (current.has(id)) {
         next.delete(id);
       } else {
